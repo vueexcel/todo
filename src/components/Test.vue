@@ -1,6 +1,10 @@
 <template>
     <div id="testing">
         {{name}} Testing
+        <br/>
+        <br/>
+        
+        <input type="text" v-model="name" />
     </div>
 </template>
 
