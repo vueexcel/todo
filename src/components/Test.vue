@@ -1,17 +1,16 @@
 <template>
     <div id="testing">
 
-        <div v-bind:style="{color: color_value.color}">
-                {{name}} Testing
-        </div>
+        <p>Type Something..</p> 
+        <i>Press enter</i>
         <br/>
+        <form v-on:submit.prevent>
+            <input v-on:keypress="submit" type="text" v-model="name" />
+        </form>
 
-        <br/>
-        <input type="text" v-model="name" />
-
-        <select v-model="color_value">
-            <option v-for="(col, index) in colors" v-bind:key="index" v-bind:value="{color: col}">{{col}}</option>
-        </select>
+        <ul>
+            <li v-for="(item, index) in data" v-bind:key="index">{{item}}</li>
+        </ul>
 
     </div> 
 </template>
@@ -22,35 +21,24 @@ export default {
   name: "Test",
   data: function() {
     return {
-      name: "manish1",
-      date: false,
-      colors: ["red", "yellow" , "black", "orange"],
-      color_value: {
-          color: "black"
-      },
+      name: "",
+      data: []
     };
   },
   methods: {
-    clear: function() {
-      this.name = "";
-    },
-    makeCapital: function() {
-      this.name = this.name.toUpperCase();
-    },
-    red: function() {
-        // eslint-disable-next-line
-        console.log(this.isRed)
-    //   this.isRed = this.redbox === "yes";
+    submit: function(e) {
+      if (e.keyCode === 13) {
+        this.data.push(this.name);
+        this.name = "";
+      }
     }
   }
 };
 </script>
 <style>
-.red {
-  color: red;
-}
-.green {
-  color: green;
+#testing li{
+    border: 1px solid;
+    padding: 5px;
 }
 </style>
 
