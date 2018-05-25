@@ -1,17 +1,24 @@
 <template>
     <div id="testing">
-        {{name}} Testing
+
+        <div :class="{red: isRed}">
+                {{name}} Testing
+        </div>
         <br/>
         <br/>
 
         {{date}}
+
+
         <br/>
         <input type="text" v-model="name" />
 
         <button v-on:click="clear">Clear</button>
 
         <button @click="makeCapital">Caps</button>
-    </div>
+
+        <input :checked="isRed" v-model="isRed" type="checkbox" @click="red" /> Red
+    </div> 
 </template>
 
 
@@ -20,7 +27,9 @@ export default {
   name: "Test",
   data: function() {
     return {
-      name: "manish1"
+      name: "manish1",
+      date: false,
+      isRed: false,
     };
   },
   // computed is not the way for format this. it goes in infite loop, computed
@@ -34,20 +43,20 @@ export default {
   //       }
   //   },
   created: function() {
-    console.log("created");
-    this.date = new Date();
+    this.date =
+      new Date().getFullYear() +
+      "-" +
+      new Date().getMonth() +
+      "-" +
+      new Date().getDay();
   },
   mounted: function() {
-    console.log("mounted");
-    this.date = new Date();
-  },
-  updated: function() {
-    console.log("updated");
-    // this.message = new Date();
-  },
-  destroyed: function() {
-    console.log("destroyed");
-    this.message = new Date();
+    this.date =
+      new Date().getFullYear() +
+      "-" +
+      new Date().getMonth() +
+      "-" +
+      new Date().getDay();
   },
   methods: {
     clear: function() {
@@ -55,10 +64,21 @@ export default {
     },
     makeCapital: function() {
       this.name = this.name.toUpperCase();
+    },
+    red: function() {
+        // eslint-disable-next-line
+        console.log(this.isRed)
+    //   this.isRed = this.redbox === "yes";
     }
   }
 };
 </script>
 <style>
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
 </style>
 
