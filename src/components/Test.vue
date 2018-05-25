@@ -1,23 +1,21 @@
 <template>
     <div id="testing">
 
-        <div :class="{red: isRed}">
+        <div v-bind:style="{color: color_value.color}">
                 {{name}} Testing
         </div>
         <br/>
-        <br/>
-
-        {{date}}
-
 
         <br/>
         <input type="text" v-model="name" />
 
-        <button v-on:click="clear">Clear</button>
+        <select v-model="color_value">
+            <option v-bind:value="{color: 'red'}">red</option>
+            <option v-bind:value="{color: 'yellow'}">yellow</option>
+            <option v-bind:value="{color: 'black'}">black</option>
+            <option v-bind:value="{color: 'orange'}">orange</option>
+        </select>
 
-        <button @click="makeCapital">Caps</button>
-
-        <input :checked="isRed" v-model="isRed" type="checkbox" @click="red" /> Red
     </div> 
 </template>
 
@@ -29,34 +27,10 @@ export default {
     return {
       name: "manish1",
       date: false,
-      isRed: false,
+      color_value: {
+          color: "black"
+      },
     };
-  },
-  // computed is not the way for format this. it goes in infite loop, computed
-  // is to set other properties in data, not itself
-  //   computed: {
-  //       date: {
-  //           set: function(newvalue) {
-  //               console.log(newvalue);
-  //               this.date = new Date(newvalue).getTime();
-  //           }
-  //       }
-  //   },
-  created: function() {
-    this.date =
-      new Date().getFullYear() +
-      "-" +
-      new Date().getMonth() +
-      "-" +
-      new Date().getDay();
-  },
-  mounted: function() {
-    this.date =
-      new Date().getFullYear() +
-      "-" +
-      new Date().getMonth() +
-      "-" +
-      new Date().getDay();
   },
   methods: {
     clear: function() {
