@@ -4,6 +4,8 @@
         <br/>
         <br/>
 
+        {{date}}
+        <br/>
         <input type="text" v-model="name" />
 
         <button v-on:click="clear">Clear</button>
@@ -18,20 +20,25 @@ export default {
   name: "Test",
   data: () => {
     return {
-      name: "manish1"
+      name: "manish1",
+      date : false
     };
   },
   created: function() {
     console.log("created");
+    this.date = new Date();
   },
   mounted: function() {
     console.log("mounted");
+    this.date = new Date();
   },
   updated: function() {
     console.log("updated");
+    // this.message = new Date();
   },
   destroyed: function() {
     console.log("destroyed");
+    this.message = new Date();
   },
   methods: {
     clear: function() {
