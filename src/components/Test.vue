@@ -18,12 +18,21 @@
 <script>
 export default {
   name: "Test",
-  data: () => {
+  data: function() {
     return {
-      name: "manish1",
-      date : false
+      name: "manish1"
     };
   },
+  // computed is not the way for format this. it goes in infite loop, computed
+  // is to set other properties in data, not itself
+  //   computed: {
+  //       date: {
+  //           set: function(newvalue) {
+  //               console.log(newvalue);
+  //               this.date = new Date(newvalue).getTime();
+  //           }
+  //       }
+  //   },
   created: function() {
     console.log("created");
     this.date = new Date();
