@@ -21,12 +21,24 @@ export default {
       name: "manish1"
     };
   },
+  created: function() {
+    console.log("created");
+  },
+  mounted: function() {
+    console.log("mounted");
+  },
+  updated: function() {
+    console.log("updated");
+  },
+  destroyed: function() {
+    console.log("destroyed");
+  },
   methods: {
     clear: function() {
       this.name = "";
     },
-    makeCapital: function(){
-        this.name = this.name.toUpperCase();
+    makeCapital: function() {
+      this.name = this.name.toUpperCase();
     }
   }
 };
