@@ -1,13 +1,8 @@
 <template>
     <div id="testing">
 
-        <p>Type Something..</p> 
-        <i>Press enter</i>
-        <br/>
-        <form v-on:submit.prevent>
-            <input v-on:keypress="submit" type="text" v-model="name" />
-        </form>
-
+        
+        <Form v-on:submit-item="submit" />
         <ul>
             <li v-for="(item, index) in data" v-bind:key="index">
                 <span>{{item}}</span>
@@ -22,31 +17,27 @@
 
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
+import Form from "./Form";
 
 export default {
-  name: "Test",
+  name: "List",
+  components: {
+    Form
+  },
   data: function() {
     return {
-      name: "",
-      data: [],
-      editIndex: false
+      data: []
     };
   },
   methods: {
-    submit: function(e) {
-      if (e.keyCode === 13) {
-        if (this.editIndex) {
-            // this.data.splice(this.editIndex,1,this.name);
-            //split also works fine, but just trying out Vue.set
-            Vue.set(this.data, this.editIndex, this.name);
-            this.name = "";
-            this.editIndex = -1;
-        } else {
-          this.data.push(this.name);
-          this.name = "";
-        }
-      }
+    submit: function(name) {
+        this.data.push(name);
+    },
+    edit: function() {
+      Vue.set(this.data, this.editIndex, this.name);
+      this.name = "";
+      this.editIndex = -1;
     },
     deleteItem: function(index) {
       this.data.splice(index, 1);
