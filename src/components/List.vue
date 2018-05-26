@@ -2,7 +2,7 @@
     <div id="testing">
 
         
-        <Form v-on:submit-item="submit" />
+        <Form v-bind:edit-index="editIndex" v-bind:name="name" v-on:edit-item="edit" v-on:submit-item="submit" />
         <ul>
             <li v-for="(item, index) in data" v-bind:key="index">
                 <span>{{item}}</span>
@@ -27,15 +27,21 @@ export default {
   },
   data: function() {
     return {
-      data: []
+      data: [],
+      name: "",
+      editIndex: -1
     };
   },
   methods: {
     submit: function(name) {
-        this.data.push(name);
+      this.data.push(name);
+      this.name = "";
     },
-    edit: function() {
-      Vue.set(this.data, this.editIndex, this.name);
+    edit: function(obj) {
+      var { name, editIndex} = obj;
+      // eslint-disable-next-line
+      console.log("actual edit", name, editIndex);
+      Vue.set(this.data, editIndex, name);
       this.name = "";
       this.editIndex = -1;
     },
@@ -43,6 +49,8 @@ export default {
       this.data.splice(index, 1);
     },
     editItem: function(index) {
+      // eslint-disable-next-line
+      console.log("edit index");
       this.editIndex = index;
       this.name = this.data[index];
     }
