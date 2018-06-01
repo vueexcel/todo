@@ -17,8 +17,7 @@ export default {
   components: { AddUserForm },
   methods: {
     adduser: function(user) {
-      // eslint-disable-next-line
-      console.log(user);
+      this.$emit("adduser", user);
     }
   },
   data() {

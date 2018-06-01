@@ -106,8 +106,8 @@ export default {
       this.$emit('adduser',{
         email: this.form_email,
         name: this.form_name,
-        password: this.form_password,
-        data: this.dob
+        password: this.form_password, 
+        date: this.dob
       });
       this.$parent.close();
     }
