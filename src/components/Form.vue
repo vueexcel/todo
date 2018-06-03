@@ -1,57 +1,33 @@
 <template>
- <div id="submitForm">
-    <p>Type Something..</p> 
-        <i>Press enter</i>
-        <br/>
-        <form v-on:submit.prevent>
-            <input v-on:keypress="submit" type="text" v-model="text" /> 
-        </form>
+ <div>
+    <b-field label="Enter Todo..">
+          <b-input v-model="message"  @keypress.native.enter="addTodo"></b-input>
+      </b-field>
 </div>
 </template>
 
 <script>
 export default {
   name: "Form",
-  data: function() {
-    return {
-      text: ""
-    };
-  },
-  watch: {
-    name: function(newName) {
-      // eslint-disable-next-line
-      console.log("watch    ", newName);
-      this.text = newName;
-    }
-  },
-  props: {
-    name: {
-      type: String,
-      require: true
-    },
-    editIndex: {
-      type: Number,
-      require: true
+  computed: {
+    message: {
+      set: function(val) {
+        this.$store.commit("updateMessage", val);
+      },
+      get: function() {
+        return this.$store.state.todo.addTodo.message;
+      }
     }
   },
   methods: {
-    submit: function(e) {
-      // eslint-disable-next-line
-      console.log(this.editIndex);
-      // eslint-disable-next-line
-      console.log(this.text);
-      if (e.keyCode === 13) {
-        if (this.editIndex !== -1) {
-          // eslint-disable-next-line
-          console.log("edit item");
-          this.$emit("edit-item", {
-            name: this.text,
-            editIndex: this.editIndex
-          });
-        } else {
-          this.$emit("submit-item", this.text);
-        }
-        this.text = "";
+    addTodo: function(evt) {
+      if (evt.keyCode === 13) {
+        this.$store.commit("addTodo", {
+          id: Math.random(0, 100) * 100,
+          text: this.$store.state.todo.addTodo.message,
+          isCompleted: false
+        });
+        this.$store.commit("updateMessage", "");
       }
     }
   }

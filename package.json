@@ -25,7 +25,9 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "rules": {
+      "constructor-super": "off"
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
