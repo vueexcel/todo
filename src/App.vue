@@ -1,28 +1,29 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <List />
+    <Header/>
+    <Content>
+        <Body />
+    </Content>
+    <Footer/>
   </div>
 </template>
 
 <script>
-import List from './components/List.vue';
+import Header from "./layout/Header.vue";
+import Footer from "./layout/Footer.vue";
+import Content from "./layout/Content.vue";
+import Body from "./layout/Body.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    List
+    Header,
+    Content,
+    Body,
+    Footer
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
