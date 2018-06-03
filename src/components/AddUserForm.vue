@@ -72,26 +72,31 @@
 <script>
 export default {
   name: "AddUserForm",
-  props: ["email", "name", "password", "date"],
+  props: ["id", "email", "name", "password", "date"],
   data: function() {
     return {
-      form_email: "",
-      form_name: "",
-      form_password: "",
+      form_email: this.email,
+      form_name: this.name,
+      form_password: this.password,
       terms: false,
-      conf_password: "",
+      conf_password: this.password,
       password_mismatch_message: "",
       password_mismatch_message_class: "",
       terms_message: "",
       terms_message_class: "",
-      dob: null
+      dob: this.date
     };
+  },
+  updated: function() {
+    // eslint-disable-next-line
+    console.log("updated add user form");
   },
   methods: {
     submitForm: function() {
       if (this.form_password !== this.conf_password) {
         this.password_mismatch_message = "Both passwords should match";
         this.password_mismatch_message_class = "is-danger";
+        return;
       } else {
         this.password_mismatch_message = "";
         this.password_mismatch_message_class = "";
@@ -99,16 +104,33 @@ export default {
       if (!this.terms) {
         this.terms_message = "Please accept terms";
         this.terms_message_class = "is-danger";
+        return;
       } else {
         this.terms_message = "";
         this.terms_message_class = "";
       }
-      this.$emit('adduser',{
-        email: this.form_email,
-        name: this.form_name,
-        password: this.form_password, 
-        date: this.dob
-      });
+      // eslint-disable-next-line
+      console.log(this.id, "form id");
+      if (this.id === -1) {
+        // eslint-disable-next-line
+        console.log("adduser called");
+        this.$emit("adduser", {
+          email: this.form_email,
+          name: this.form_name,
+          password: this.form_password,
+          date: this.dob
+        });
+      } else {
+        // eslint-disable-next-line
+        console.log("edit called");
+        this.$emit("useredited", {
+          id: this.id,
+          email: this.form_email,
+          name: this.form_name,
+          password: this.form_password,
+          date: this.dob
+        });
+      }
       this.$parent.close();
     }
   }
