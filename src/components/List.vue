@@ -1,71 +1,42 @@
 <template>
-    <div id="testing">
+    <div>
+          <Form />
 
+          <br/>
+          <b-field v-for="(item,index) in todos" :key="index">
+            <b-tag @close="completeTodo(item)" :type="item.isCompleted ? 'is-dark' : 'is-info'" closable>{{item.text}}</b-tag>  
+          </b-field>
         
-        <Form v-bind:edit-index="editIndex" v-bind:name="name" v-on:edit-item="edit" v-on:submit-item="submit" />
-        <ul>
-            <li v-for="(item, index) in data" v-bind:key="index">
-                <span>{{item}}</span>
-
-                <a href="#" v-on:click.prevent="deleteItem(index)" >Delete</a>
-                <a href="#" v-on:click.prevent="editItem(index)" >Edit</a>
-            </li>
-        </ul>
-
     </div> 
 </template>
 
 
 <script>
-import Vue from "vue";
 import Form from "./Form";
+import { mapGetters } from "vuex";
 
 export default {
   name: "List",
   components: {
     Form
   },
-  data: function() {
-    return {
-      data: [],
-      name: "",
-      editIndex: -1
-    };
+  updated: function() {
+    // eslint-disable-next-line
+    console.log(this.$store.state.todo);
+  },
+  computed: {
+    ...mapGetters({
+      todos: "allTodos"
+    })
   },
   methods: {
-    submit: function(name) {
-      this.data.push(name);
-      this.name = "";
-    },
-    edit: function(obj) {
-      var { name, editIndex} = obj;
+    completeTodo: function(item) {
       // eslint-disable-next-line
-      console.log("actual edit", name, editIndex);
-      Vue.set(this.data, editIndex, name);
-      this.name = "";
-      this.editIndex = -1;
-    },
-    deleteItem: function(index) {
-      this.data.splice(index, 1);
-    },
-    editItem: function(index) {
-      // eslint-disable-next-line
-      console.log("edit index");
-      this.editIndex = index;
-      this.name = this.data[index];
+    console.log(item);
+      this.$store.commit("completeTodo", item.id);
     }
   }
 };
 </script>
-<style>
-#testing li {
-  border: 1px solid;
-  padding: 5px;
-}
-#testing li a {
-  font-size: 10px;
-  float: right;
-  padding: 5px;
-}
-</style>
+
 

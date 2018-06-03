@@ -1,6 +1,9 @@
 export default {
     state: {
-        todos : []
+        todos : [],
+        addTodo: {
+            message: ""
+        }
     },
     getters: {
         allTodos: state => state.todos,
@@ -13,11 +16,16 @@ export default {
             state.todos.push(todo);
         },
         completeTodo : (state, id) => {
-            state.todos.map((todo, index) => {
-                if(id === index)
+            state.todos.map((todo) => {
+                 // eslint-disable-next-line
+                console.log(id , todo.id)
+                if(id === todo.id)
                     todo.isCompleted = true;
                 return todo;
             })
+        },
+        updateMessage : (state, msg) => {
+            state.addTodo.message = msg;
         }
     }
 }
