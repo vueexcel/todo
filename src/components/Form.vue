@@ -1,11 +1,18 @@
 <template>
  <div id="submitForm">
-    <p>Type Something..</p> 
-        <i>Press enter</i>
-        <br/>
-        <form v-on:submit.prevent>
-            <input v-on:keypress="submit" type="text" v-model="text" /> 
-        </form>
+    <section>
+         <b-field label="Username">
+            <b-input required v-model="username" maxlength="30"></b-input>
+        </b-field>
+
+        <b-field label="Password">
+            <b-input required type="password"
+                v-model="password"
+                password-reveal>
+            </b-input>
+        </b-field>
+        <button class="button is-full">Login</button>
+    </section>
 </div>
 </template>
 
@@ -14,46 +21,9 @@ export default {
   name: "Form",
   data: function() {
     return {
-      text: ""
+      username: "",
+      password: ""
     };
-  },
-  watch: {
-    name: function(newName) {
-      // eslint-disable-next-line
-      console.log("watch    ", newName);
-      this.text = newName;
-    }
-  },
-  props: {
-    name: {
-      type: String,
-      require: true
-    },
-    editIndex: {
-      type: Number,
-      require: true
-    }
-  },
-  methods: {
-    submit: function(e) {
-      // eslint-disable-next-line
-      console.log(this.editIndex);
-      // eslint-disable-next-line
-      console.log(this.text);
-      if (e.keyCode === 13) {
-        if (this.editIndex !== -1) {
-          // eslint-disable-next-line
-          console.log("edit item");
-          this.$emit("edit-item", {
-            name: this.text,
-            editIndex: this.editIndex
-          });
-        } else {
-          this.$emit("submit-item", this.text);
-        }
-        this.text = "";
-      }
-    }
   }
 };
 </script>
