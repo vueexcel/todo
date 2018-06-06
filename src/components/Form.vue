@@ -6,12 +6,12 @@
         </b-field>
 
         <b-field label="Password">
-            <b-input required type="password"
+            <b-input type="password"
                 v-model="password"
                 password-reveal>
             </b-input>
         </b-field>
-        <button @click="loginClick" class="button is-full">Login</button>
+        <button @click="loginClick" :class="{ 'button': true, 'is-full' : true, 'is-loading' : login_progress}">Login</button>
     </section>
 </div>
 </template>
@@ -25,23 +25,38 @@ export default {
       if (val.username) {
         this.$router.push("profile");
       }
+    },
+    error_message: function(val) {
+      if (val) {
+        this.$snackbar.open({
+          duration: 5000,
+          message:
+            "Login failed. " + val.message,
+          type: "is-danger",
+          position: "is-bottom-left"
+        });
+      }
     }
   },
   methods: {
     ...mapActions(["login"]),
     loginClick: function() {
-      if (this.username.length > 0 && this.password.length > 0) {
-        this.login({
-          username: this.username,
-          password: this.password
-        });
-      }
+      this.login({
+        username: this.username,
+        password: this.password
+      });
     }
   },
   computed: {
     ...mapGetters({
       user: "getUser"
     }),
+    login_progress: function() {
+      return this.$store.state.login.login_progress;
+    },
+    error_message: function() {
+      return this.$store.state.login.error;
+    },
     username: {
       get: function() {
         return this.$store.state.login.username;
