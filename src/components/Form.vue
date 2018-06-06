@@ -1,57 +1,61 @@
 <template>
  <div id="submitForm">
-    <p>Type Something..</p> 
-        <i>Press enter</i>
-        <br/>
-        <form v-on:submit.prevent>
-            <input v-on:keypress="submit" type="text" v-model="text" /> 
-        </form>
+    <section>
+         <b-field label="Username">
+            <b-input required v-model="username" maxlength="30"></b-input>
+        </b-field>
+
+        <b-field label="Password">
+            <b-input required type="password"
+                v-model="password"
+                password-reveal>
+            </b-input>
+        </b-field>
+        <button @click="loginClick" class="button is-full">Login</button>
+    </section>
 </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Form",
-  data: function() {
-    return {
-      text: ""
-    };
-  },
   watch: {
-    name: function(newName) {
-      // eslint-disable-next-line
-      console.log("watch    ", newName);
-      this.text = newName;
-    }
-  },
-  props: {
-    name: {
-      type: String,
-      require: true
-    },
-    editIndex: {
-      type: Number,
-      require: true
+    user: function(val) {
+      if (val.username) {
+        this.$router.push("profile");
+      }
     }
   },
   methods: {
-    submit: function(e) {
-      // eslint-disable-next-line
-      console.log(this.editIndex);
-      // eslint-disable-next-line
-      console.log(this.text);
-      if (e.keyCode === 13) {
-        if (this.editIndex !== -1) {
-          // eslint-disable-next-line
-          console.log("edit item");
-          this.$emit("edit-item", {
-            name: this.text,
-            editIndex: this.editIndex
-          });
-        } else {
-          this.$emit("submit-item", this.text);
-        }
-        this.text = "";
+    ...mapActions(["login"]),
+    loginClick: function() {
+      if (this.username.length > 0 && this.password.length > 0) {
+        this.login({
+          username: this.username,
+          password: this.password
+        });
+      }
+    }
+  },
+  computed: {
+    ...mapGetters({
+      user: "getUser"
+    }),
+    username: {
+      get: function() {
+        return this.$store.state.login.username;
+      },
+      set: function(val) {
+        this.$store.commit("updateUsername", val);
+      }
+    },
+    password: {
+      get: function() {
+        return this.$store.state.login.password;
+      },
+      set: function(val) {
+        this.$store.commit("updatePassword", val);
       }
     }
   }
