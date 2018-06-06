@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import App from './App.vue'
-import Test from './components/Test.vue'
+import Login from './pages/Login.vue'
+import Home from './pages/Home.vue'
 import VueRouter from 'vue-router'
+import Buefy from 'buefy'
+import Vuex from 'vuex'
 
+import 'buefy/lib/buefy.css'
+
+Vue.use(Buefy)
 Vue.use(VueRouter)
+Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
 const routes = [
-  {'path': '/foo', component: Test}
+  {'path': '/', component: Home},
+  {'path': '/login', component: Login}
 ]
 
 const router = new VueRouter({
