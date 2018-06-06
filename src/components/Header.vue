@@ -8,7 +8,8 @@
             <div class="navbar-menu">
                 <div class="navbar-end">
                     <div class="navbar-item">
-                     <a @click="login" class="button is-white">Login</a> 
+                     <a v-if="!isLoggedIn" @click="login" class="button is-white">Login</a> 
+                     <a v-if="isLoggedIn" @click="logout" class="button is-white">Logout</a> 
                     </div>
                 </div>
             </div>
@@ -16,11 +17,24 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   name: "Header",
+  computed: {
+    ...mapGetters({
+      isLoggedIn: "isLoggedIn"
+    })
+  },
   methods: {
+    ...mapActions({
+      dologout: "logout"
+    }),
     login: function() {
       this.$router.push("login");
+    },
+    logout: function() {
+      this.dologout();
+      this.$router.push("/");
     }
   }
 };
