@@ -4,13 +4,12 @@ import Login from './pages/Login.vue'
 import Home from './pages/Home.vue'
 import VueRouter from 'vue-router'
 import Buefy from 'buefy'
-import Vuex from 'vuex'
-
 import 'buefy/lib/buefy.css'
+
+import store from "./store"
 
 Vue.use(Buefy)
 Vue.use(VueRouter)
-Vue.use(Vuex)
 
 Vue.config.productionTip = false
 
@@ -26,5 +25,6 @@ const router = new VueRouter({
 
 new Vue({
   router: router,
-  render: h => h(App)
+  render: h => h(App),
+  store
 }).$mount('#app')

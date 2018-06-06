@@ -19,11 +19,23 @@
 <script>
 export default {
   name: "Form",
-  data: function() {
-    return {
-      username: "",
-      password: ""
-    };
+  computed: {
+    username: {
+      get: function() {
+        return this.$store.state.login.username;
+      },
+      set: function(val) {
+        this.$store.commit("updateUsername", val);
+      }
+    },
+    password: {
+      get: function() {
+        return this.$store.state.login.password;
+      },
+      set: function(val) {
+        this.$store.commit("updatePassword", val);
+      }
+    }
   }
 };
 </script>
